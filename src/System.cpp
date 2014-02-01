@@ -1,14 +1,15 @@
 #include <nbody/constants.h>
 #include <nbody/System.h>
 #include <nbody/Vector3.h>
+#include <nbody/Integrator.h>
+
 
 #include <fstream>
 #include <stdexcept>
 #include <iostream>
 #include <iomanip>
 
-namespace nbody {
-
+namespace nbody{
   inline void System::interactBodies( size_t i, size_t j, float softFactor, Vector3f &acc ) const {
     Vector3f r = _body[j].position() - _body[i].position();
     float distance = r.norm() + softFactor;
@@ -36,9 +37,11 @@ namespace nbody {
       v = _body[i].velocity();
       a = _body[i].force();
 
-      v = v + ( a * dt );
+      Integrator<float> iv{v, a, dt};
+      v = iv.next();
       v = v * _dampingFactor;
-      r = r + v * dt;
+      Integrator<float> ir{r, v, dt};
+      r = ir.next();
 
       _body[i].position() = r;
       _body[i].velocity() = v;
