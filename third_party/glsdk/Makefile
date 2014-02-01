@@ -6,7 +6,7 @@ ifndef config
 endif
 export config
 
-PROJECTS := glload glimg freeglut glutil glmesh
+PROJECTS := glload
 
 .PHONY: all clean help $(PROJECTS)
 
@@ -16,28 +16,8 @@ glload:
 	@echo "==== Building glload ($(config)) ===="
 	@${MAKE} --no-print-directory -C glload -f Makefile
 
-glimg: 
-	@echo "==== Building glimg ($(config)) ===="
-	@${MAKE} --no-print-directory -C glimg -f Makefile
-
-freeglut: 
-	@echo "==== Building freeglut ($(config)) ===="
-	@${MAKE} --no-print-directory -C freeglut -f Makefile
-
-glutil: 
-	@echo "==== Building glutil ($(config)) ===="
-	@${MAKE} --no-print-directory -C glutil -f Makefile
-
-glmesh: 
-	@echo "==== Building glmesh ($(config)) ===="
-	@${MAKE} --no-print-directory -C glmesh -f Makefile
-
 clean:
 	@${MAKE} --no-print-directory -C glload -f Makefile clean
-	@${MAKE} --no-print-directory -C glimg -f Makefile clean
-	@${MAKE} --no-print-directory -C freeglut -f Makefile clean
-	@${MAKE} --no-print-directory -C glutil -f Makefile clean
-	@${MAKE} --no-print-directory -C glmesh -f Makefile clean
 
 help:
 	@echo "Usage: make [config=name] [target]"
@@ -50,9 +30,5 @@ help:
 	@echo "   all (default)"
 	@echo "   clean"
 	@echo "   glload"
-	@echo "   glimg"
-	@echo "   freeglut"
-	@echo "   glutil"
-	@echo "   glmesh"
 	@echo ""
 	@echo "For more information, see http://industriousone.com/premake/quick-start"
