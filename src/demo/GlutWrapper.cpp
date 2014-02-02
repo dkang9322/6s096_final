@@ -31,7 +31,7 @@ GlutWrapper::GlutWrapper( const std::string &title, Mode debugMode ) :
   _vao{}, _program{}, _debugMode{debugMode}, _sys{nullptr} {}
 
 //Constructor Done
-GlutWrapper::GlutWrapper( const std::string &title, Mode debugMode, System *sys ) : 
+GlutWrapper::GlutWrapper( const std::string &title, System *sys, Mode debugMode ) : 
   _shaders{nullptr}, _width{}, _height{}, 
   _windowId{}, _windowTitle{title},
   _bufSize{}, _buf{nullptr}, _positionBufferObject{},

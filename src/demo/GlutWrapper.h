@@ -48,8 +48,8 @@ public:
   
   //New Constructor to be used
   GlutWrapper( const std::string &title,
-	       Mode debugMode = Mode::NDEBUG,
-	       System *sys);
+	       System *sys,
+	       Mode debugMode = Mode::NDEBUG);
 
     virtual ~GlutWrapper();
 
