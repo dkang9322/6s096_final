@@ -1,6 +1,6 @@
 #include "GlutWrapper.h"
 #include "Shaders.h"
-
+#include <string>
 // Include System, to be used in main
 #include <nbody/System.h>
 typedef class nbody::System System;
@@ -16,13 +16,24 @@ typedef class nbody::System System;
 #include <algorithm>
 #include <cmath>
 
+			    /*
+			    " if(position.x < 0.0f){\n"
+			    " gl_Position=vec4(0.0f, 0.0f, -0.5f, 1.0f);\n"
+			    "}else if(position.x < 0.25f){\n"
+			    "   gl_Position = vec4(0.5f, 0.5f, 0.5f, 1.0f);\n"
+			    "}else{\n"
+			    "gl_Position=vec4(-0.5f, 0.0f, 0.25f, 1.0f);\n"
+			    "}\n"
+			    */
+
+
 namespace nBodyShaders {
   const std::string vertex1(
 			    "#version 130\n"
 			    "in vec4 position;\n"
 			    "void main()\n"
 			    "{\n"
-			    "   gl_Position = position;\n"
+			    " gl_Position = position;\n"
 			    "}\n"
 			    );
 
@@ -105,7 +116,8 @@ void NBodyWindow::updateBuffer() {
     */
 
     _sys->updatePositions( _buf );
-    _sys->update( 0.05f ); //dt = 100
+    //std::cout << "I'm updating " << _buf[0] << " " << _buf[1] << " " << _buf[2] << "\n";
+    _sys->update( 0.09f ); //dt = 100
 
   glBindBuffer( GL_ARRAY_BUFFER, _positionBufferObject );
   glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof( float ) * _bufSize, _buf );
@@ -118,7 +130,8 @@ void NBodyWindow::drawBuffer() {
   glEnableVertexAttribArray( 0 );
   glVertexAttribPointer( 0, 4, GL_FLOAT, GL_FALSE, 0, 0 );
 
-  glDrawArrays( GL_QUADS, 0, (GLsizei) _bufSize );
+  glDrawArrays( GL_POINTS, 0, //(GLsizei) _bufSize );
+		7 );
 
   glDisableVertexAttribArray( 0 );
   glUseProgram( 0 );
@@ -139,7 +152,7 @@ void NBodyWindow::display() {
 int main( int argc, char **argv ) {
   try {
     // Input
-    std::ifstream input{ "binary-system-simple.txt" };
+    std::ifstream input{ "resources/nbody/binary-system-simple.txt" };
 
     nbody::System sys{ input };
     size_t N = sys.nBodies();

@@ -42,7 +42,7 @@ namespace nbody{
       v = v * _dampingFactor;
       Integrator<float> ir{r, v, dt};
       r = ir.next();
-
+      
       _body[i].position() = r;
       _body[i].velocity() = v;
     }
@@ -78,6 +78,7 @@ namespace nbody{
 	    buf[4*i+1] = _body[i].y();
 	    buf[4*i+2] = _body[i].z();
 	    buf[4*i+3] = 1.0f;
+	    
 	}
     }
 
