@@ -164,7 +164,7 @@ int main( int argc, char **argv ) {
     shaders.addToVertexList( nBodyShaders::vertex1 );
     shaders.addToFragmentList( nBodyShaders::fragment1 );
 
-    NBodyWindow window{ "N-Body Simulation", sys, GlutWrapper::NDEBUG };
+    NBodyWindow window{ "N-Body Simulation",sys, GlutWrapper::NDEBUG };
     window.init( argc, argv, 500, 500, &shaders, bufSize, buf );
     window.run();
 
