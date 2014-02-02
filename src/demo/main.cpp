@@ -68,6 +68,7 @@ public:
 
   void display();
   void reshape( int theWidth, int theHeight );
+    void mouse( int button, int state, int x, int y );
   void keyboard( unsigned char key, int x, int y );
 };
 
@@ -87,6 +88,11 @@ NBodyWindow::~NBodyWindow() {}
 void NBodyWindow::reshape( int theWidth, int theHeight ) {
   glViewport( 0, 0, (GLsizei) theWidth, (GLsizei) theHeight );
 }
+
+void NBodyWindow::mouse( int /*button*/, int /*state*/, int x, int y ) {
+    _sys->addBody( x, y ); // Add Body
+}
+
 
 void NBodyWindow::keyboard( unsigned char key, int /*x*/, int /*y*/ ) {
   const char ESCAPE_KEY = 27;

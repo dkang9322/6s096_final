@@ -36,6 +36,7 @@ namespace nbody {
 
       
       void updatePositions( float *buf ); // Modifies the buf
+      //void addBody( int x, int y );
 
     // Getter Functions
       inline size_t nBodies() const { return _nBodies; }

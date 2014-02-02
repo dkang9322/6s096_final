@@ -70,6 +70,28 @@ namespace nbody{
       output << _body[i] << "\n";
     }
   }
+    void System::addBody( int x, int y ) {
+	// This function adds to its body, an extra point
+	_nBodies += 1;
+
+	// Temporary output file 
+	std::ostream tempOut{ "resources/nbody/tempOut.txt" } ;
+	writeState( tempOut ); // Write Current Bodies
+
+	auto newVel = _body[0].velocity();
+	auto newAcc = _body[0].force();
+	auto newMass = _body[0].mass();
+	
+	Vector3f newPos{ x, y, 0 }; 
+
+	tempOut << newPos << " " << newVel << " " << newAcc << " " <<newMass << "\n";
+	tempOut.close();
+
+	delete [] _body;
+	
+	std::istream input{ "resources/nbody/tempOut.txt" };
+	readState( input );
+    }
 
     void System::updatePositions( float *buf ) {
 	// This function updates buf value to xyz values of System's Bodies
