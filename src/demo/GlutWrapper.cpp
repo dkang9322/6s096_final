@@ -58,7 +58,7 @@ void GlutWrapper::init( int argc, char **argv,
 
   glutInitDisplayMode( displayMode );
   // We'll be using OpenGL 3.0
-  glutInitContextVersion( 3, 0 );
+  glutInitContextVersion( 2, 1 );
   glutInitContextProfile( GLUT_CORE_PROFILE );
 
   // Give us some extra debugging info if we asked
@@ -83,7 +83,7 @@ void GlutWrapper::createWindow() {
 	glload::LoadFunctions();
   glutSetOption( GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION );
 
-  if( !glload::IsVersionGEQ( 3, 0 ) ) {
+  if( !glload::IsVersionGEQ( 2, 1 ) ) {
     std::cout << "You have OpenGL " << glload::GetMajorVersion();
     std::cout << "." << glload::GetMinorVersion() << " but this needs 3.0.\n";
     throw std::runtime_error( "Wrong version of OpenGL" );

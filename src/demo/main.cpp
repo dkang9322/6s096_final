@@ -29,8 +29,8 @@ typedef class nbody::System System;
 
 namespace nBodyShaders {
   const std::string vertex1(
-			    "#version 130\n"
-			    "in vec4 position;\n"
+			    "#version 120\n"
+			    "varying vec4 position;\n"
 			    "void main()\n"
 			    "{\n"
 			    " gl_Position = position;\n"
@@ -38,11 +38,11 @@ namespace nBodyShaders {
 			    );
 
   const std::string fragment1(
-			      "#version 130\n"
-			      "out vec4 outputColor;\n"
+			      "#version 120\n"
+			      //"varying vec4 outputColor;\n"
 			      "void main()\n"
 			      "{\n"
-			      "   outputColor = vec4(1.0f,1.0f,1.0f,1.0f);"
+			      "   gl_FragColor = vec4(1.0f,1.0f,1.0f,1.0f);"
 			      "}\n"
 			      );
 } // namespace shaders
@@ -131,7 +131,7 @@ void NBodyWindow::drawBuffer() {
   glVertexAttribPointer( 0, 4, GL_FLOAT, GL_FALSE, 0, 0 );
 
   glDrawArrays( GL_POINTS, 0, //(GLsizei) _bufSize );
-		7 );
+		2 );
 
   glDisableVertexAttribArray( 0 );
   glUseProgram( 0 );
