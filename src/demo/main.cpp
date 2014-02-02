@@ -93,6 +93,11 @@ void NBodyWindow::updateElapsedTime() {
 
 void NBodyWindow::updateBuffer() {
 
+//...................................................................................................
+    // smart way of updating the buffer based on the new positions of the bodies in the system
+//...................................................................................................
+
+
     _sys->updatePositions( _buf );
     _sys->update( 0.09f ); //dt = 100
 
@@ -135,7 +140,10 @@ int main( int argc, char **argv ) {
     size_t N = sys.nBodies();
     size_t bufSize = 4 * N;
     float *buf = new float[bufSize];
-    
+
+//....................................................................................................
+    // smart way of initializing buffer based on the initial positions of bodies in the system    
+//....................................................................................................
  
     // Will write to buf
     sys.updatePositions( buf );

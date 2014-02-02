@@ -72,6 +72,12 @@ namespace nbody{
   }
 
 
+//..............................................................................................
+ //It is nice that specification of the function is given
+ // However since we are not changing the system, "const" should be declared after the name of the function
+//.............................................................................................
+
+
     void System::updatePositions( float *buf ) {
 	// This function updates buf value to xyz values of System's Bodies
 	for( size_t i = 0; i < _nBodies; i++ ) {
