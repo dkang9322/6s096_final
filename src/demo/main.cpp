@@ -38,13 +38,15 @@ namespace nBodyShaders {
 class NBodyWindow : public GlutWrapper {
   float _elapsedTime;
 public:
-  NBodyWindow( const std::string &title, 
-               Mode debugMode = Mode::NDEBUG );
 
     // New Constructor with sys
   NBodyWindow( const std::string &title, 
                Mode debugMode = Mode::NDEBUG,
 	       System *sys );
+
+  NBodyWindow( const std::string &title, 
+               Mode debugMode = Mode::NDEBUG );
+
 
   ~NBodyWindow();
 
@@ -65,7 +67,7 @@ NBodyWindow::NBodyWindow( const std::string &title, Mode debugMode ) :
 NBodyWindow::NBodyWindow( const std::string &title, Mode debugMode = Mode::NDEBUG, System *sys ) :
     GlutWrapper{ title, debugMode, sys }, _elapsedTime{0.0f} {
 	_instance = this;
-					  };
+					  }
 
 
 NBodyWindow::~NBodyWindow() {}
