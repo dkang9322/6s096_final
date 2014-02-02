@@ -1,8 +1,8 @@
 #include "GlutWrapper.h"
 #include "Shaders.h"
 
-// Include Simulation, to be used in main
-#include <nbody/Simulation.h>
+// Include System, to be used in main
+#include <nbody/System.h>
 
 #include <glload/gl_3_0.h>
 #include <glload/gll.hpp>
@@ -76,6 +76,7 @@ void NBodyWindow::updateElapsedTime() {
 
 void NBodyWindow::updateBuffer() {
 
+    /*
   updateElapsedTime();
   size_t nVertices = _bufSize / 4;
   for( size_t i = 0; i < nVertices; ++i ) {
@@ -86,6 +87,10 @@ void NBodyWindow::updateBuffer() {
     _buf[4*i+2] = 0.0f; // ignore z-coordinate
     _buf[4*i+3] = 1.0f; // ignore extra
   }
+    */
+
+    _sys->updatePositions( _buf );
+    _sys->update( 100 ); //dt = 100
 
   glBindBuffer( GL_ARRAY_BUFFER, _positionBufferObject );
   glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof( float ) * _bufSize, _buf );
@@ -118,10 +123,18 @@ void NBodyWindow::display() {
 
 int main( int argc, char **argv ) {
   try {
-    size_t N = 13;
+    // Input
+    std::ifstream input{ "binary-system-simple.txt" };
+
+    System sys{ input };
+    size_t N = sys.nBodies();
     size_t bufSize = 4 * N;
     float *buf = new float[bufSize];
+    
+    // Will write to buf
+    sys.updatePositions( buf );
 
+    /*
     for( size_t i = 0; i < N; ++i ) {
       buf[4*i] = cosf( 2 * 3.1415f * float( i ) / float( N - 1 ) );
       buf[4*i+1] = sinf( 2 * 3.1415f * float( i ) / float( N - 1 ) );
@@ -130,41 +143,15 @@ int main( int argc, char **argv ) {
       std::cout << buf[4*i] << " " << buf[4*i+1];
       std::cout << " " << buf[4*i+2] << " " << buf[4*i+3] << "\n";
     }
-    /*
-    // Simulation sml{ "file.in" , window };
-    // NBODYWindow is a child class of GlutWrapper
-    //     NBodyWindow window{ Simulation->_name, GlutWrapper::NDEBUG };
-
-    // How does window know where sml->_system->_buf is??
-    // window.init( ...., bufSize, sml->_system->_buf)
-
-    // sml->evolveSystem( 3, dt );
-    // //window appropriately redraw
-    Simulation sml{ "file.in" };
-
-    NBodyWindow window{ sml->_name, GlutWrapper::NDEBUG };
-    
-    window.init( argc, argv, 500, 500, &shaders, bufSize, sml->_system->_buf );
-    //In Simulation::evolveSystem(30, 3);
-    //
-    // Do SOmething
-    for () {
-       _system->update( dt );
-       window.display();// I wrote
-    }
-}
     */
 
-    // create a simulation
-    std::ifstream input{ "binary-system-simple.txt" };
-    //Simulation 
-    nbody::Simulation sml{ input };
 
     Shaders shaders;
     shaders.addToVertexList( nBodyShaders::vertex1 );
     shaders.addToFragmentList( nBodyShaders::fragment1 );
-    NBodyWindow window{ "N-Body Simulation", GlutWrapper::NDEBUG };
-    window.init( argc, argv, 500, 500, &shaders, bufSize, sml._system->_body );
+
+    NBodyWindow window{ "N-Body Simulation", GlutWrapper::NDEBUG, sys };
+    window.init( argc, argv, 500, 500, &shaders, bufSize, buf );
     window.run();
 
     delete [] buf;

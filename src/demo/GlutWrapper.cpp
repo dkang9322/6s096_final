@@ -16,26 +16,26 @@ GlutWrapper::GlutWrapper() :
   _shaders{nullptr}, _width{}, _height{}, 
   _windowId{}, _windowTitle{},
   _bufSize{}, _buf{nullptr}, _positionBufferObject{},
-  _vao{}, _program{}, _debugMode{Mode::NDEBUG}, sml{nullptr} {}
+  _vao{}, _program{}, _debugMode{Mode::NDEBUG}, _sys{nullptr} {}
 
 GlutWrapper::GlutWrapper( Mode debugMode ) : 
   _shaders{nullptr}, _width{}, _height{}, 
   _windowId{}, _windowTitle{},
   _bufSize{}, _buf{nullptr}, _positionBufferObject{},
-  _vao{}, _program{}, _debugMode{debugMode}, sml{nullptr} {}
+  _vao{}, _program{}, _debugMode{debugMode}, _sys{nullptr} {}
 
 GlutWrapper::GlutWrapper( const std::string &title, Mode debugMode ) : 
   _shaders{nullptr}, _width{}, _height{}, 
   _windowId{}, _windowTitle{title},
   _bufSize{}, _buf{nullptr}, _positionBufferObject{},
-  _vao{}, _program{}, _debugMode{debugMode}, sml{nullptr} {}
+  _vao{}, _program{}, _debugMode{debugMode}, _sys{nullptr} {}
 
 //Constructor Done
-GlutWrapper::GlutWrapper( const std::string &title, Mode debugMode, Simulation &simul ) : 
+GlutWrapper::GlutWrapper( const std::string &title, Mode debugMode, System *sys ) : 
   _shaders{nullptr}, _width{}, _height{}, 
   _windowId{}, _windowTitle{title},
   _bufSize{}, _buf{nullptr}, _positionBufferObject{},
-  _vao{}, _program{}, _debugMode{debugMode}, sml{ simul } {}
+  _vao{}, _program{}, _debugMode{debugMode}, _sys{ sys } {}
 
 
 

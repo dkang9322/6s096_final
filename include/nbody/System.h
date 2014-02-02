@@ -33,9 +33,12 @@ namespace nbody {
     void update( float dt );
     void setSoftening( float soft ) { _softFactor = soft; }
     void setDamping( float damp ) { _dampingFactor = damp; }
+
+      
+      void updatePositions( float *buf ); // Modifies the buf
+
     // Getter Functions
-    inline const Body* body() const { return _body; }
-    inline size_t nBodies() const { return _nBodies; }
+      inline size_t nBodies() const { return _nBodies; }
   };
 
 } // namespace nbody

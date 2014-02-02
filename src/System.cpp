@@ -71,4 +71,14 @@ namespace nbody{
     }
   }
 
+    void System::updatePositions( float *buf ) {
+	// This function updates buf value to xyz values of System's Bodies
+	for( size_t i = 0; i < _nBodies; i++ ) {
+	    buf[4*i] = _body[i].x();
+	    buf[4*i+1] = _body[i].y();
+	    buf[4*i+2] = _body[i].z();
+	    buf[4*i+3] = 1.0f;
+	}
+    }
+
 } // namespace nbody

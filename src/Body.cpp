@@ -18,5 +18,4 @@ namespace nbody {
     os << body._force << " " <<  body._mass;
     return os;
   }
-
 } // namespace nbody
