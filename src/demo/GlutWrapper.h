@@ -1,14 +1,14 @@
 #include <glload/gl_3_0.h>
 #include <glload/gll.hpp>
 #include <GL/freeglut.h>
+#include <nbody/System.h>
 
 #include <cstdint>
 #include <string>
 #include <iostream>
 #include <stdexcept>
 
-// Forward Declare Simulation
-class System;
+typedef class nbody::System System;
 
 class Shaders;
 
@@ -31,15 +31,21 @@ protected:
 	GLuint _positionBufferObject;
 	GLuint _vao;
 	GLuint _program;
+
+
+
 	
-	// Pointer to Simulation
-	System *_sys;
 
   static GlutWrapper *_instance;
   GlutWrapper( const GlutWrapper& ) = delete;
   GlutWrapper& operator=( const GlutWrapper& ) = delete;
 public:
 	enum Mode { DEBUG, NDEBUG };
+  Mode _debugMode;
+  // Pointer to Simulation
+  System *_sys;
+
+
   GlutWrapper();
   GlutWrapper( Mode debugMode );
 	GlutWrapper( const std::string &title );
@@ -66,5 +72,5 @@ public:
   virtual void keyboard( unsigned char key, int x, int y );
   virtual void mouse( int button, int state, int x, int y );
 private:
-  Mode _debugMode;
+
 };
