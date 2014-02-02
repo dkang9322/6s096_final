@@ -3,6 +3,7 @@
 
 // Include System, to be used in main
 #include <nbody/System.h>
+typedef class nbody::System System;
 
 #include <glload/gl_3_0.h>
 #include <glload/gll.hpp>
@@ -65,7 +66,7 @@ NBodyWindow::NBodyWindow( const std::string &title, Mode debugMode ) :
 				   }
 
 NBodyWindow::NBodyWindow( const std::string &title, System *sys, Mode debugMode ) :
-    GlutWrapper{ title, debugMode, sys }, _elapsedTime{0.0f} {
+  GlutWrapper{ title, sys, debugMode }, _elapsedTime{0.0f} {
 	_instance = this;
 					  }
 
@@ -140,7 +141,7 @@ int main( int argc, char **argv ) {
     // Input
     std::ifstream input{ "binary-system-simple.txt" };
 
-    System sys{ input };
+    nbody::System sys{ input };
     size_t N = sys.nBodies();
     size_t bufSize = 4 * N;
     float *buf = new float[bufSize];
@@ -164,7 +165,7 @@ int main( int argc, char **argv ) {
     shaders.addToVertexList( nBodyShaders::vertex1 );
     shaders.addToFragmentList( nBodyShaders::fragment1 );
 
-    NBodyWindow window{ "N-Body Simulation", sys, GlutWrapper::NDEBUG };
+    NBodyWindow window{ "N-Body Simulation", &sys, GlutWrapper::NDEBUG };
     window.init( argc, argv, 500, 500, &shaders, bufSize, buf );
     window.run();
 
