@@ -16,15 +16,6 @@ typedef class nbody::System System;
 #include <algorithm>
 #include <cmath>
 
-			    /*
-			    " if(position.x < 0.0f){\n"
-			    " gl_Position=vec4(0.0f, 0.0f, -0.5f, 1.0f);\n"
-			    "}else if(position.x < 0.25f){\n"
-			    "   gl_Position = vec4(0.5f, 0.5f, 0.5f, 1.0f);\n"
-			    "}else{\n"
-			    "gl_Position=vec4(-0.5f, 0.0f, 0.25f, 1.0f);\n"
-			    "}\n"
-			    */
 
 
 namespace nBodyShaders {
@@ -102,21 +93,7 @@ void NBodyWindow::updateElapsedTime() {
 
 void NBodyWindow::updateBuffer() {
 
-    /*
-  updateElapsedTime();
-  size_t nVertices = _bufSize / 4;
-  for( size_t i = 0; i < nVertices; ++i ) {
-    float xFraction = float( i + 2 * _elapsedTime ) / float( nVertices - 1 );
-    float yFraction = float( i - 2 * _elapsedTime ) / float( nVertices - 1 );
-    _buf[4*i] = cosf( 2 * 3.1415f * xFraction  );
-    _buf[4*i+1] = sinf( 2 * 3.1415f * yFraction );
-    _buf[4*i+2] = 0.0f; // ignore z-coordinate
-    _buf[4*i+3] = 1.0f; // ignore extra
-  }
-    */
-
     _sys->updatePositions( _buf );
-    //std::cout << "I'm updating " << _buf[0] << " " << _buf[1] << " " << _buf[2] << "\n";
     _sys->update( 0.09f ); //dt = 100
 
   glBindBuffer( GL_ARRAY_BUFFER, _positionBufferObject );
@@ -153,25 +130,15 @@ int main( int argc, char **argv ) {
   try {
     // Input
     std::ifstream input{ "resources/nbody/binary-system-simple.txt" };
-
+    
     nbody::System sys{ input };
     size_t N = sys.nBodies();
     size_t bufSize = 4 * N;
     float *buf = new float[bufSize];
     
+ 
     // Will write to buf
     sys.updatePositions( buf );
-
-    /*
-    for( size_t i = 0; i < N; ++i ) {
-      buf[4*i] = cosf( 2 * 3.1415f * float( i ) / float( N - 1 ) );
-      buf[4*i+1] = sinf( 2 * 3.1415f * float( i ) / float( N - 1 ) );
-      buf[4*i+2] = 0.0f;
-      buf[4*i+3] = 1.0f;
-      std::cout << buf[4*i] << " " << buf[4*i+1];
-      std::cout << " " << buf[4*i+2] << " " << buf[4*i+3] << "\n";
-    }
-    */
 
 
     Shaders shaders;
