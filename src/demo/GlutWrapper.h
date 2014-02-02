@@ -7,6 +7,9 @@
 #include <iostream>
 #include <stdexcept>
 
+// Forward Declare Simulation
+class Simulation;
+
 class Shaders;
 
 class GlutWrapper {
@@ -24,10 +27,14 @@ protected:
   int _windowId;
   std::string _windowTitle;
 	size_t _bufSize;
-	float *_buf;
+	float *_buf; 
 	GLuint _positionBufferObject;
 	GLuint _vao;
 	GLuint _program;
+	
+	// Pointer to Simulation
+	Simulation *sml;
+
   static GlutWrapper *_instance;
   GlutWrapper( const GlutWrapper& ) = delete;
   GlutWrapper& operator=( const GlutWrapper& ) = delete;
@@ -38,6 +45,13 @@ public:
 	GlutWrapper( const std::string &title );
 	GlutWrapper( const std::string &title, 
                Mode debugMode = Mode::NDEBUG );
+  
+  //New Constructor to be used
+  GlutWrapper( const std::string &title,
+	       Mode debugMode = Mode::NDEBUG,
+	       Simulation &simul);
+
+  float* parse_body();
     virtual ~GlutWrapper();
 
   void init( int argc, char **argv, int theWidth, int theHeight, Shaders *shaders, size_t bufSize = 0, float *buf = nullptr );

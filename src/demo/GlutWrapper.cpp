@@ -16,19 +16,28 @@ GlutWrapper::GlutWrapper() :
   _shaders{nullptr}, _width{}, _height{}, 
   _windowId{}, _windowTitle{},
   _bufSize{}, _buf{nullptr}, _positionBufferObject{},
-  _vao{}, _program{}, _debugMode{Mode::NDEBUG} {}
+  _vao{}, _program{}, _debugMode{Mode::NDEBUG}, sml{nullptr} {}
 
 GlutWrapper::GlutWrapper( Mode debugMode ) : 
   _shaders{nullptr}, _width{}, _height{}, 
   _windowId{}, _windowTitle{},
   _bufSize{}, _buf{nullptr}, _positionBufferObject{},
-  _vao{}, _program{}, _debugMode{debugMode} {}
+  _vao{}, _program{}, _debugMode{debugMode}, sml{nullptr} {}
 
 GlutWrapper::GlutWrapper( const std::string &title, Mode debugMode ) : 
   _shaders{nullptr}, _width{}, _height{}, 
   _windowId{}, _windowTitle{title},
   _bufSize{}, _buf{nullptr}, _positionBufferObject{},
-  _vao{}, _program{}, _debugMode{debugMode} {}
+  _vao{}, _program{}, _debugMode{debugMode}, sml{nullptr} {}
+
+//Constructor Done
+GlutWrapper::GlutWrapper( const std::string &title, Mode debugMode, Simulation &simul ) : 
+  _shaders{nullptr}, _width{}, _height{}, 
+  _windowId{}, _windowTitle{title},
+  _bufSize{}, _buf{nullptr}, _positionBufferObject{},
+  _vao{}, _program{}, _debugMode{debugMode}, sml{ simul } {}
+
+
 
 GlutWrapper::~GlutWrapper() { 
   // shaders should be managed outside the program
