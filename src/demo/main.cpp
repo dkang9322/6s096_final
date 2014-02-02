@@ -40,6 +40,12 @@ class NBodyWindow : public GlutWrapper {
 public:
   NBodyWindow( const std::string &title, 
                Mode debugMode = Mode::NDEBUG );
+
+    // New Constructor with sys
+  NBodyWindow( const std::string &title, 
+               Mode debugMode = Mode::NDEBUG,
+	       System *sys );
+
   ~NBodyWindow();
 
   void updateElapsedTime();
@@ -55,6 +61,12 @@ NBodyWindow::NBodyWindow( const std::string &title, Mode debugMode ) :
   GlutWrapper{ title, debugMode }, _elapsedTime{0.0f} {
     _instance = this; 
 				   }
+
+NBodyWindow::NBodyWindow( const std::string &title, Mode debugMode = Mode::NDEBUG, System *sys ) :
+    GlutWrapper{ title, debugMode, sys }, _elapsedTime{0.0f} {
+	_instance = this;
+					  };
+
 
 NBodyWindow::~NBodyWindow() {}
 
