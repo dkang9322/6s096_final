@@ -73,7 +73,8 @@ namespace nbody{
 
 
 //..............................................................................................
- //It is nice that specification of the function is given
+ // It is nice that specification of the function is given.
+ // It is a very good idea that there is a method that helps update the buffer.
  // However since we are not changing the system, "const" should be declared after the name of the function
 //.............................................................................................
 

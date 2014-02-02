@@ -142,7 +142,7 @@ int main( int argc, char **argv ) {
     float *buf = new float[bufSize];
 
 //....................................................................................................
-    // smart way of initializing buffer based on the initial positions of bodies in the system    
+    // smart way of initializing buffer based on the initial positions of bodies in the system.  
 //....................................................................................................
  
     // Will write to buf
@@ -152,6 +152,12 @@ int main( int argc, char **argv ) {
     Shaders shaders;
     shaders.addToVertexList( nBodyShaders::vertex1 );
     shaders.addToFragmentList( nBodyShaders::fragment1 );
+
+//.....................................................................................................
+    // It is not a bad idea to pass sys into window. Instead of using simulation, system itself 
+    // has a method that compute the next move (system.update()). In this case passing the system
+    // into window is sufficient for simulating the movement of the bodies. Good Job!
+//....................................................................................................
 
 
     NBodyWindow window{ "N-Body Simulation", &sys, GlutWrapper::NDEBUG };
