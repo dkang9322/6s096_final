@@ -105,7 +105,7 @@ void NBodyWindow::updateBuffer() {
     */
 
     _sys->updatePositions( _buf );
-    _sys->update( 100 ); //dt = 100
+    _sys->update( 0.05f ); //dt = 100
 
   glBindBuffer( GL_ARRAY_BUFFER, _positionBufferObject );
   glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof( float ) * _bufSize, _buf );
