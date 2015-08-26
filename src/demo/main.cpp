@@ -16,15 +16,6 @@ typedef class nbody::System System;
 #include <algorithm>
 #include <cmath>
 
-			    /*
-			    " if(position.x < 0.0f){\n"
-			    " gl_Position=vec4(0.0f, 0.0f, -0.5f, 1.0f);\n"
-			    "}else if(position.x < 0.25f){\n"
-			    "   gl_Position = vec4(0.5f, 0.5f, 0.5f, 1.0f);\n"
-			    "}else{\n"
-			    "gl_Position=vec4(-0.5f, 0.0f, 0.25f, 1.0f);\n"
-			    "}\n"
-			    */
 
 
 namespace nBodyShaders {
@@ -68,7 +59,6 @@ public:
 
   void display();
   void reshape( int theWidth, int theHeight );
-    void mouse( int button, int state, int x, int y );
   void keyboard( unsigned char key, int x, int y );
 };
 
@@ -89,11 +79,6 @@ void NBodyWindow::reshape( int theWidth, int theHeight ) {
   glViewport( 0, 0, (GLsizei) theWidth, (GLsizei) theHeight );
 }
 
-void NBodyWindow::mouse( int /*button*/, int /*state*/, int x, int y ) {
-    _sys->addBody( x, y ); // Add Body
-}
-
-
 void NBodyWindow::keyboard( unsigned char key, int /*x*/, int /*y*/ ) {
   const char ESCAPE_KEY = 27;
   if( key == ESCAPE_KEY ) {
@@ -108,21 +93,12 @@ void NBodyWindow::updateElapsedTime() {
 
 void NBodyWindow::updateBuffer() {
 
-    /*
-  updateElapsedTime();
-  size_t nVertices = _bufSize / 4;
-  for( size_t i = 0; i < nVertices; ++i ) {
-    float xFraction = float( i + 2 * _elapsedTime ) / float( nVertices - 1 );
-    float yFraction = float( i - 2 * _elapsedTime ) / float( nVertices - 1 );
-    _buf[4*i] = cosf( 2 * 3.1415f * xFraction  );
-    _buf[4*i+1] = sinf( 2 * 3.1415f * yFraction );
-    _buf[4*i+2] = 0.0f; // ignore z-coordinate
-    _buf[4*i+3] = 1.0f; // ignore extra
-  }
-    */
+//...................................................................................................
+    // smart way of updating the buffer based on the new positions of the bodies in the system
+//...................................................................................................
+
 
     _sys->updatePositions( _buf );
-    //std::cout << "I'm updating " << _buf[0] << " " << _buf[1] << " " << _buf[2] << "\n";
     _sys->update( 0.09f ); //dt = 100
 
   glBindBuffer( GL_ARRAY_BUFFER, _positionBufferObject );
@@ -159,30 +135,29 @@ int main( int argc, char **argv ) {
   try {
     // Input
     std::ifstream input{ "resources/nbody/binary-system-simple.txt" };
-
+    
     nbody::System sys{ input };
     size_t N = sys.nBodies();
     size_t bufSize = 4 * N;
     float *buf = new float[bufSize];
-    
+
+//....................................................................................................
+    // smart way of initializing buffer based on the initial positions of bodies in the system.  
+//....................................................................................................
+ 
     // Will write to buf
     sys.updatePositions( buf );
-
-    /*
-    for( size_t i = 0; i < N; ++i ) {
-      buf[4*i] = cosf( 2 * 3.1415f * float( i ) / float( N - 1 ) );
-      buf[4*i+1] = sinf( 2 * 3.1415f * float( i ) / float( N - 1 ) );
-      buf[4*i+2] = 0.0f;
-      buf[4*i+3] = 1.0f;
-      std::cout << buf[4*i] << " " << buf[4*i+1];
-      std::cout << " " << buf[4*i+2] << " " << buf[4*i+3] << "\n";
-    }
-    */
 
 
     Shaders shaders;
     shaders.addToVertexList( nBodyShaders::vertex1 );
     shaders.addToFragmentList( nBodyShaders::fragment1 );
+
+//.....................................................................................................
+    // It is not a bad idea to pass sys into window. Instead of using simulation, system itself 
+    // has a method that compute the next move (system.update()). In this case passing the system
+    // into window is sufficient for simulating the movement of the bodies. Good Job!
+//....................................................................................................
 
 
     NBodyWindow window{ "N-Body Simulation", &sys, GlutWrapper::NDEBUG };
